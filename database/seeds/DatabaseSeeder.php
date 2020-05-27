@@ -13,5 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(SetSeeder::class);
         $this->call(SoundSeeder::class);
+        $this->call(SetSoundSeeder::class);
     }
 }
