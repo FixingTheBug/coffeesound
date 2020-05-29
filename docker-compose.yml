@@ -1,32 +1,32 @@
 version: "3.7"
 services:
-  app:
+  laravel:
     build:
       args:
         user: chris
         uid: 1000
       context: ./
-      dockerfile: Dockerfile
-    image: coffeesound
-    container_name: coffeesound-app
+      dockerfile: ./docker/backend/Dockerfile
+    image: coffeesound_laravel
+    container_name: coffeesound-laravel
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./:/var/www
+      - ./backend:/var/www
     networks:
       - coffeesound
 
-  db:
+  database:
     image: mysql:5.7
-    container_name: coffeesound-db
+    container_name: coffeesound-database
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_DATABASE: coffeesound
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: chris
       SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      SERVICE_NAME: database
     volumes:
       - ./docker-compose/mysql:/docker-entrypoint-initdb.d
     networks:
@@ -39,22 +39,41 @@ services:
     ports:
       - 8000:80
     volumes:
-      - ./:/var/www
+      - ./backend:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d/
     networks:
       - coffeesound
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    container_name: coffeesound-phpmyadmin
     links:
-      - db:db
+      - database
     ports:
       - 9191:80
     environment:
-      MYSQL_USERNAME: chris
+      PMA_HOST: database
+      MYSQL_USER: chris
+      MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
+    depends_on:
+      - database
     networks:
       - coffeesound
+
+  angular:
+    container_name: coffeesound-angular
+    build:
+      context: .
+      dockerfile: ./docker/frontend/Dockerfile
+    volumes:
+      - './frontend:/app'
+      - './frontend/node_modules'
+    ports:
+      - 4201:4200
+    networks:
+      - coffeesound
+
 networks:
   coffeesound:
     driver: bridge
