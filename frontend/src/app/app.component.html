@@ -1,10 +1,32 @@
 <section
-    *ngFor="
-      let set of sets;"
-      [class] = set.name
+*ngFor="
+let set of sets;"
+[class] = set.name
+id="set-{{set.name}}"
 >
-  <h2>{{ set.name | titlecase }}</h2>
-  <li *ngFor="let sound of set.sounds">
-    {{ sound.name }} - {{ sound.pivot.volume }}
-  </li>
+<h1 class="set-title">{{ set.name | titlecase }}</h1>
+<div *ngFor="let sound of set.sounds">
+  <div class="sound-box">
+    <div class="sound-image">
+      <img
+        src="{{ sound.icon }}"
+        style="width: 100%; height: 100%;"
+        (click)="toggleSound(sound)"
+      />
+    </div>
+    <div class="sound-content">
+      <div class="sound-title">
+        <span>{{ sound.name.replace('-', ' ') | titlecase }}</span>
+      </div>
+      <div>
+
+        <input type="range" min="0" max="100" value="{{ sound.pivot.volume }}" (change)="changeVolume(set.id, sound.id, $event.target.value)" />
+        <audio src="http://localhost:8000/storage/{{sound.file}}" id="{{sound.file}}-sound"></audio>
+      </div>
+    </div>
+    <div class="clear-both"></div>
+  </div>
+
+</div>
+
 </section>

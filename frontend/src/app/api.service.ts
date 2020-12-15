@@ -13,7 +13,16 @@ export class ApiService {
   }
 
   public getSets() {
-    return this.httpClient.get<Set>(`${this.apiURL}/sets`);
+    return this.httpClient.get<Set>(
+      `${this.apiURL}/sets`
+    );
+  }
+
+  public changeVolume(set, sound, volume) {
+    return this.httpClient.patch<Set>(
+      `${this.apiURL}/sound/change-volume`,
+      {"set": set, "sound": sound, "volume": volume}
+    )
   }
 
 }

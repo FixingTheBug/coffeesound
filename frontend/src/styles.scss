@@ -1,1 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: #3498db;
+}
+
+input {
+  width: 70%;
+}
+
+.sound-image {
+  width: 20%;
+  float: left;
+}
+
+.sound-content {
+  width: 80%;
+  float: left;
+}
+
+.clear-both {
+  clear: both;
+}
+
+#set-day {
+}
+
+#set-night {
+  display: none;
+}
+
+.set-title {
+  font-size: 50px;
+  margin: 50px 0;
+  text-align: center;
+}
+
+.sound-box {
+  border: 1px solid #ffffff;
+  background: #ecf0f1;
+  margin: 20px auto;
+  width: 50%;
+}
+
+.sound-title {
+  margin: 10px 0;
+  text-decoration: underline;
+}
