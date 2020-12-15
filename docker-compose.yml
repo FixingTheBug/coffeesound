@@ -74,6 +74,15 @@ services:
     networks:
       - coffeesound
 
+  test:
+    container_name: coffeesound-test
+    build:
+      context: .
+      dockerfile: ./docker/test/Dockerfile
+    networks:
+      - coffeesound
+    tty: true
+
 networks:
   coffeesound:
     driver: bridge
