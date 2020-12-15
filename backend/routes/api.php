@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('api')->get('/sets', 'Api\SetController@index');
+// Route::middleware('api')->patch('/sets/{set}/sound/{sound}/volume', 'Api\SoundController@changeVolume');
+Route::middleware('api')->patch('/sound/change-volume', 'Api\SoundController@changeVolume');
